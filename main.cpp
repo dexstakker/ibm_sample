@@ -39,8 +39,8 @@ int main() {
     
     cout << "TEST" << endl;
     // Build the word list
-    ifstream file("/Users/dex/test.txt");
-    //ifstream file("/Users/dex/wordsforproblem.txt");
+    //ifstream file("/Users/dex/test.txt");
+    ifstream file("/Users/dex/wordsforproblem.txt");
     
     if (file.is_open())
     {
