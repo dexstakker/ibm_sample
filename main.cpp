@@ -25,7 +25,7 @@ bool dfs(string word, unordered_set<string> &word_set) {
     return false;
 }
 
-vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+int findAllConcatenatedWordsInADict(vector<string>& words) {
     for (string w : words) {
         word_set.insert(w);
     }
@@ -68,7 +68,12 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
     }
     cout << endl;
 
-    return answer;
+    int retval = 0;
+    for (int num : len_set) {
+        retval += tally[num].size();
+    }
+    cout << "For question #2 the answer is " << retval;
+    return retval;
 }
 
 int main() {
@@ -93,8 +98,8 @@ int main() {
     }
     cout << "Number of entries in Dictionary = " << overallDict.size() << endl;
     
-    vector<string> ans = findAllConcatenatedWordsInADict(overallDict);
-    cout << endl << "For question #2: Number of concatenated words = " << ans.size() << endl;
+    int ans = findAllConcatenatedWordsInADict(overallDict);
+    cout << endl << "For question #2: Number of concatenated words = " << ans << endl;
 
     return 0;
 }
