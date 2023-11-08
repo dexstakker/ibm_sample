@@ -51,7 +51,7 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
     
     // 3. Sort that set of lengths
     int longest = *len_set.begin();
-    cout << "For Q2, the length of the longest word is " << longest << endl;
+    cout << "For question #1a, the length of the longest word is " << longest << endl;
     cout << "The matching word(s): " << endl;
     for (string v : tally[longest]) {
         cout << v << endl;
@@ -61,7 +61,7 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
     set<int>::iterator iter = len_set.begin();
     iter++;
     int second_place = *iter;
-    cout << "For Q3, the length of the 2nd-longest word is " << second_place << endl;
+    cout << "For question #1b, the length of the 2nd-longest word is " << second_place << endl;
     cout << "The matching word(s): " << endl;
     for (string v : tally[second_place]) {
         cout << v << endl;
@@ -94,7 +94,7 @@ int main() {
     cout << "Number of entries in Dictionary = " << overallDict.size() << endl;
     
     vector<string> ans = findAllConcatenatedWordsInADict(overallDict);
-    cout << endl << "For question #1: Number of concatenated words = " << ans.size() << endl;
+    cout << endl << "For question #2: Number of concatenated words = " << ans.size() << endl;
 
     return 0;
 }
