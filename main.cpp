@@ -9,8 +9,6 @@
 using namespace std;
 
 unordered_set<string> word_set;
-set<int, greater<int>> len_set;
-map<int,vector<string>> tally;
 
 
 bool dfs(string word, unordered_set<string> &word_set) {
@@ -25,7 +23,7 @@ bool dfs(string word, unordered_set<string> &word_set) {
     return false;
 }
 
-map<int,vector<string>> findAllConcatenatedWordsInADict(vector<string>& words) {
+map<int,vector<string>> findAllConcatenatedWordsInADict(vector<string>& words, set<int, greater<int>>& word_length_counts) {
     map<int,vector<string>> result;
     for (string w : words) {
         word_set.insert(w);
@@ -46,34 +44,18 @@ map<int,vector<string>> findAllConcatenatedWordsInADict(vector<string>& words) {
                 result[len].push_back(word);
             }
             // 2. Add that length to that set of lengths
-            len_set.insert(len);
+            word_length_counts.insert(len);
         }
     }
     
-    // 3. Sort that set of lengths
-    int longest = *len_set.begin();
-    cout << "For question #1a, the length of the longest word is " << longest << endl;
-    cout << "The matching word(s): " << endl;
-    for (string v : result[longest]) {
-        cout << v << endl;
-    }
-    cout << endl;
-    
-    set<int>::iterator iter = len_set.begin();
-    iter++;
-    int second_place = *iter;
-    cout << "For question #1b, the length of the 2nd-longest word is " << second_place << endl;
-    cout << "The matching word(s): " << endl;
-    for (string v : result[second_place]) {
-        cout << v << endl;
-    }
-    cout << endl;
 
     return result;
 }
 
 int main() {
     vector<string> overallDict;
+    set<int, greater<int>> len_set;
+    map<int,vector<string>> tally;
     
     
     cout << "TEST" << endl;
@@ -94,7 +76,7 @@ int main() {
     }
     cout << "Number of entries in Dictionary = " << overallDict.size() << endl;
     
-    tally = findAllConcatenatedWordsInADict(overallDict);
+    tally = findAllConcatenatedWordsInADict(overallDict, len_set);
     int final_count = 0;
     for (int num : len_set) {
         final_count += tally[num].size();
@@ -102,5 +84,25 @@ int main() {
     cout << "For question #2 the answer is " << final_count;
     cout << endl << "For question #2: Number of concatenated words = " << final_count << endl;
 
+    // Sort that set of lengths
+    int longest = *len_set.begin();
+    cout << "For question #1a, the length of the longest word is " << longest << endl;
+    cout << "The matching word(s): " << endl;
+    for (string v : tally[longest]) {
+        cout << v << endl;
+    }
+    cout << endl;
+    
+    set<int>::iterator iter = len_set.begin();
+    iter++;
+    int second_place = *iter;
+    cout << "For question #1b, the length of the 2nd-longest word is " << second_place << endl;
+    cout << "The matching word(s): " << endl;
+    for (string v : tally[second_place]) {
+        cout << v << endl;
+    }
+    cout << endl;
+
+    
     return 0;
 }
