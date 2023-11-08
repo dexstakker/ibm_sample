@@ -24,6 +24,7 @@ bool dfs(string word, unordered_set<string> &word_set) {
 }
 
 map<int,vector<string>> findAllConcatenatedWordsInADict(vector<string>& words, set<int, greater<int>>& word_length_counts) {
+    word_set = unordered_set<string>();
     map<int,vector<string>> result;
     for (string w : words) {
         word_set.insert(w);
