@@ -2,11 +2,16 @@
 #include <fstream>
 #include <unordered_set>
 #include <vector>
+#include <set>
+#include <map>
 #include <algorithm>
 
 using namespace std;
 
 unordered_set<string> word_set;
+set<int, greater<int>> len_set;
+map<int,vector<string>> tally;
+
 
 bool dfs(string word, unordered_set<string> &word_set) {
     for (int i = 0; i < word.size();i++) {
@@ -24,18 +29,45 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
     for (string w : words) {
         word_set.insert(w);
     }
+    
     vector<string> answer;
     for  (string word: words) {
         if (dfs(word, word_set)) {
-            int len = word.length();
+            int len = (int)word.length();
             
             answer.push_back(word);
             // 1. Add word to vector for that length
+            if (tally.find(len) == tally.end()) {
+                vector<string> val;
+                val.push_back(word);
+                tally[len] = val;
+            } else {
+                tally[len].push_back(word);
+            }
             // 2. Add that length to that set of lengths
+            len_set.insert(len);
         }
     }
-    // Sort that set of lengths so we can get the top 2 values and use them to
-    // reference a vector of strings for each length
+    
+    // 3. Sort that set of lengths
+    int longest = *len_set.begin();
+    cout << "For Q2, the length of the longest word is " << longest << endl;
+    cout << "The matching word(s): " << endl;
+    for (string v : tally[longest]) {
+        cout << v << endl;
+    }
+    cout << endl;
+    
+    set<int>::iterator iter = len_set.begin();
+    iter++;
+    int second_place = *iter;
+    cout << "For Q3, the length of the 2nd-longest word is " << second_place << endl;
+    cout << "The matching word(s): " << endl;
+    for (string v : tally[second_place]) {
+        cout << v << endl;
+    }
+    cout << endl;
+
     return answer;
 }
 
