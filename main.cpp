@@ -25,24 +25,25 @@ bool dfs(string word, unordered_set<string> &word_set) {
     return false;
 }
 
-int findAllConcatenatedWordsInADict(vector<string>& words) {
+map<int,vector<string>> findAllConcatenatedWordsInADict(vector<string>& words) {
+    map<int,vector<string>> result;
     for (string w : words) {
         word_set.insert(w);
     }
     
-    vector<string> answer;
+    //vector<string> answer;
     for  (string word: words) {
         if (dfs(word, word_set)) {
             int len = (int)word.length();
             
-            answer.push_back(word);
+            //answer.push_back(word);
             // 1. Add word to vector for that length
-            if (tally.find(len) == tally.end()) {
+            if (result.find(len) == result.end()) {
                 vector<string> val;
                 val.push_back(word);
-                tally[len] = val;
+                result[len] = val;
             } else {
-                tally[len].push_back(word);
+                result[len].push_back(word);
             }
             // 2. Add that length to that set of lengths
             len_set.insert(len);
@@ -53,7 +54,7 @@ int findAllConcatenatedWordsInADict(vector<string>& words) {
     int longest = *len_set.begin();
     cout << "For question #1a, the length of the longest word is " << longest << endl;
     cout << "The matching word(s): " << endl;
-    for (string v : tally[longest]) {
+    for (string v : result[longest]) {
         cout << v << endl;
     }
     cout << endl;
@@ -63,17 +64,12 @@ int findAllConcatenatedWordsInADict(vector<string>& words) {
     int second_place = *iter;
     cout << "For question #1b, the length of the 2nd-longest word is " << second_place << endl;
     cout << "The matching word(s): " << endl;
-    for (string v : tally[second_place]) {
+    for (string v : result[second_place]) {
         cout << v << endl;
     }
     cout << endl;
 
-    int retval = 0;
-    for (int num : len_set) {
-        retval += tally[num].size();
-    }
-    cout << "For question #2 the answer is " << retval;
-    return retval;
+    return result;
 }
 
 int main() {
@@ -98,8 +94,13 @@ int main() {
     }
     cout << "Number of entries in Dictionary = " << overallDict.size() << endl;
     
-    int ans = findAllConcatenatedWordsInADict(overallDict);
-    cout << endl << "For question #2: Number of concatenated words = " << ans << endl;
+    tally = findAllConcatenatedWordsInADict(overallDict);
+    int final_count = 0;
+    for (int num : len_set) {
+        final_count += tally[num].size();
+    }
+    cout << "For question #2 the answer is " << final_count;
+    cout << endl << "For question #2: Number of concatenated words = " << final_count << endl;
 
     return 0;
 }
