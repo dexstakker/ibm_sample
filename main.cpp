@@ -27,9 +27,15 @@ vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
     vector<string> answer;
     for  (string word: words) {
         if (dfs(word, word_set)) {
+            int len = word.length();
+            
             answer.push_back(word);
+            // 1. Add word to vector for that length
+            // 2. Add that length to that set of lengths
         }
     }
+    // Sort that set of lengths so we can get the top 2 values and use them to
+    // reference a vector of strings for each length
     return answer;
 }
 
@@ -60,4 +66,3 @@ int main() {
 
     return 0;
 }
-
